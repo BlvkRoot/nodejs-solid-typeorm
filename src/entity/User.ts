@@ -1,18 +1,32 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, Column, PrimaryColumn} from "typeorm";
+import { uuid } from "uuidv4";
 
-@Entity()
+@Entity('users')
 export class User {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryColumn()
+    readonly id?: string;
 
     @Column()
-    firstName: string;
+    name: string;
+
+    @Column({
+        unique: true,
+    })
+    username: string;
+
+    @Column({
+        unique: true
+    })
+    email: string;
 
     @Column()
-    lastName: string;
+    password: string;
 
-    @Column()
-    age: number;
+    constructor() {
+        if(!this.id) {
+            this.id = uuid();
+        }
+    }
 
 }
